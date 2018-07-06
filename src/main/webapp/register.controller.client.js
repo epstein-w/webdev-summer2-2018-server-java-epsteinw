@@ -18,6 +18,14 @@
             password: passwordStr
         };
 
-        console.log(userObj);
+        var userObjStr = JSON.stringify(userObj);
+
+        fetch('/register',  {
+            method: 'post',
+            body: userObjStr,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
 })();
