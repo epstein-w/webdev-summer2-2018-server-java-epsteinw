@@ -1,14 +1,19 @@
 function UserServiceClient() {
+    this.path = window.location.href;
+    console.log(this.path);
+    this.url = this.path.substring(0, this.path.indexOf("/", 8))+ "/api/user";
+    console.log(this.url);
+
     this.createUser = createUser;
     this.findAllUsers = findAllUsers;
     this.findUserById = findUserById;
     this.deleteUser = deleteUser;
     this.updateUser = updateUser;
-    this.url = 'http://localhost:8080/api/user';
+
     var self = this;
     function createUser(user, callback) {
         return fetch(self.url, {
-            method: 'post',
+            method: "post",
             body: JSON.stringify(user),
             headers: {
                 'content-type': 'application/json'
@@ -28,7 +33,7 @@ function UserServiceClient() {
             });
     }
     function updateUser(userId, user, callback) {
-        return fetch(self.url + '/' + userId, {
+        return fetch(self.url + "/" + userId, {
         method: 'put',
         body: JSON.stringify(user),
         headers: {
@@ -44,7 +49,7 @@ function UserServiceClient() {
         });
     }
     function deleteUser(userId, callback) {
-        return fetch(self.url + '/' + userId, {
+        return fetch(self.url + "/" + userId, {
             method: 'delete'
         })
     }
