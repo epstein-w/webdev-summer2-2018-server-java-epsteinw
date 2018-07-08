@@ -5,7 +5,7 @@ function User(username, password, lastName, firstName) {
     this.firstName = firstName;
     this.phone = -1;
     this.role = "none";
-    this.dateOfBirth = "January 1, 2000";
+    this.dateOfBirth = new Date("01/01/2000");
 
     this.setUsername = setUsername;
     this.getUsername = getUsername;

@@ -7,7 +7,6 @@
     main();
 
     function main() {
-        console.log("enterred main");
         $usernameFld = $('#usernameFld');
         $passwordFld = $('#passwordFld');
         $firstNameFld = $('#firstNameFld');
@@ -20,15 +19,14 @@
 
         $userRowTemplate = $('#wbdv-template');
 
-        $tbody = $("#wbdv-tbody");
+        $tbody = $(".wbdv-tbody");
 
         $editBtn.click(updateUser);
         $createBtn.click(createUser);
         $removeBtn.click(deleteUser);
         $searchBtn.click(findUserById);
 
-        console.log("main end");
-        //findAllUsers();
+        findAllUsers();
     }
     function createUser() {
         console.log("createUser");
@@ -37,9 +35,6 @@
         var firstNameStr = $firstNameFld.val();
         var lastNameStr = $lastNameFld.val();
         var roleStr = $roleFld.val();
-        console.log ($("#roleFld").val());
-        console.log($roleFld);
-        console.log(roleStr);
         var userObj = {
             username: usernameStr,
             password: passwordStr,
@@ -52,8 +47,7 @@
         };
 
 
-        userService.createUser(userObj);
-            //.then(findAllUsers);
+        userService.createUser(userObj).then(findAllUsers);
 
     }
     function findAllUsers() {
@@ -75,19 +69,29 @@
 
     }
     function renderUsers(users) {
-        // $tbody.empty();
-        // for(var i=0; i<users.length; i++) {
-        //     var user = users[i];
-        //     var clone = $userRowTemplate.clone();
-        //
-        //     clone.attr('id', user.id);
-        //
-        //     clone.find('.delete').click(deleteUser);
-        //     clone.find('.edit').click(editUser);
-        //
-        //     clone.find('.username')
-        //         .html(user.username);
-        //     tbody.append(clone);
-        // }
+        $tbody.empty();
+        for(var i=0; i<users.length; i++) {
+            var cUser = users[i];
+            var clone = $userRowTemplate.clone();
+
+            clone.attr('id', cUser.id);
+
+            clone.find('.delete').click(deleteUser);
+            clone.find('.edit').click(updateUser);
+
+            clone.find('.wbdv-username')
+                .html(cUser.username);
+            clone.find('.wbdv-password')
+                .html("&nbsp");
+            clone.find('.wbdv-first-name')
+                .html(cUser.firstName);
+            clone.find('.wbdv-last-name')
+                .html(cUser.lastName);
+            clone.find('.wbdv-role')
+                .html(cUser.role);
+
+            $tbody.append(clone);
+        }
+
     }
 })();
