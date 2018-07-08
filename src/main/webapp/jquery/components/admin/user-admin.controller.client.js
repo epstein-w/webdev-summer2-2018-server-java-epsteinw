@@ -1,12 +1,21 @@
 (function() {
     var $usernameFld, $passwordFld;
-    var $removeBtn, $editBtn, $createBtn;
+    var $removeBtn, $editBtn, $createBtn, $searchBtn;
     var $firstNameFld, $lastNameFld;
     var $userRowTemplate, $tbody;
     var userService = new AdminUserServiceClient();
     $(main);
 
     function main() {
+        $usernameFld = $('#usernameFld');
+        $passwordFld = $('#passwordFld');
+        $firstNameFld = $('#firstNameFld');
+        $lastNameFld = $('#lastNameFld');
+
+        $removeBtn = $('wbdv-remove')
+        $editBtn = $('wbdv-edit')
+        $createBtn = $('wbdv-create')
+        $searchBtn = $('wbdv-search')
 
     }
     function createUser() {
@@ -22,19 +31,11 @@
             lastName: lastNameStr
         };
 
-        var userObjStr = JSON.stringify(userObj);
+        userService.createUser(userObj).then(findAllUsers);
 
-        fetch('/api/register',  {
-            method: 'post',
-            body: userObjStr,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        
     }
     function findAllUsers() {
-
+        userService.findAllUsers().then(renderUsers);
     }
     function findUserById() {
 
