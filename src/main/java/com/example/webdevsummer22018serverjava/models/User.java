@@ -17,6 +17,19 @@ public class User {
 	private String phone;
 	private String role;
 	private String dateOfBirth;
+	private String email;
+	
+	public User() {
+		this.username = "notSet";
+		this.password = "notSet";
+		this.firstName = "notSet";
+		this.lastName = "notSet";
+		this.phone = "notSet";
+		this.email = "notSet";
+		this.role = "notSet";
+		this.dateOfBirth = "notSet";
+	}
+	
 	
 	public String getUsername() {
 		return username;
@@ -65,5 +78,13 @@ public class User {
 	}
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

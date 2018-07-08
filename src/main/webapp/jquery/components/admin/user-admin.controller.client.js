@@ -1,7 +1,7 @@
 (function() {
     var $usernameFld, $passwordFld;
     var $removeBtn, $editBtn, $createBtn, $searchBtn;
-    var $firstNameFld, $lastNameFld;
+    var $firstNameFld, $lastNameFld, $roleFld;
     var $userRowTemplate, $tbody;
     var userService = new UserServiceClient();
     main();
@@ -12,7 +12,7 @@
         $passwordFld = $('#passwordFld');
         $firstNameFld = $('#firstNameFld');
         $lastNameFld = $('#lastNameFld');
-
+        $roleFld = $('#roleFLd');
         $removeBtn = $('#wbdv-remove');
         $editBtn = $('#wbdv-edit');
         $createBtn = $('#wbdv-create');
@@ -36,12 +36,18 @@
         var passwordStr = $passwordFld.val();
         var firstNameStr = $firstNameFld.val();
         var lastNameStr = $lastNameFld.val();
-
+        var roleStr = $roleFld.val();
+        console.log($roleFld);
+        console.log(roleStr);
         var userObj = {
             username: usernameStr,
             password: passwordStr,
             firstName: firstNameStr,
-            lastName: lastNameStr
+            lastName: lastNameStr,
+            role: roleStr,
+            phone: null,
+            dateOfBirth: null,
+            email: null
         };
 
 
