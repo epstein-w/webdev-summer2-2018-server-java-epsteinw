@@ -12,7 +12,7 @@
         $passwordFld = $('#passwordFld');
         $firstNameFld = $('#firstNameFld');
         $lastNameFld = $('#lastNameFld');
-        $roleFld = $('#roleFLd');
+        $roleFld = $("#roleFld");
         $removeBtn = $('#wbdv-remove');
         $editBtn = $('#wbdv-edit');
         $createBtn = $('#wbdv-create');
@@ -37,6 +37,7 @@
         var firstNameStr = $firstNameFld.val();
         var lastNameStr = $lastNameFld.val();
         var roleStr = $roleFld.val();
+        console.log ($("#roleFld").val());
         console.log($roleFld);
         console.log(roleStr);
         var userObj = {
