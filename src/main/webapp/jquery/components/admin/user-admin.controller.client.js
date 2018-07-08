@@ -7,15 +7,16 @@
     main();
 
     function main() {
+        console.log("enterred main");
         $usernameFld = $('#usernameFld');
         $passwordFld = $('#passwordFld');
         $firstNameFld = $('#firstNameFld');
         $lastNameFld = $('#lastNameFld');
 
-        $removeBtn = $('wbdv-remove');
-        $editBtn = $('wbdv-edit');
-        $createBtn = $('wbdv-create');
-        $searchBtn = $('wbdv-search');
+        $removeBtn = $('#wbdv-remove');
+        $editBtn = $('#wbdv-edit');
+        $createBtn = $('#wbdv-create');
+        $searchBtn = $('#wbdv-search');
 
         $userRowTemplate = $('#wbdv-template');
 
@@ -26,9 +27,11 @@
         $removeBtn.click(deleteUser);
         $searchBtn.click(findUserById);
 
+        console.log("main end");
         //findAllUsers();
     }
     function createUser() {
+        console.log("createUser");
         var usernameStr = $usernameFld.val();
         var passwordStr = $passwordFld.val();
         var firstNameStr = $firstNameFld.val();
@@ -41,7 +44,7 @@
             lastName: lastNameStr
         };
 
-        console.log("createUser");
+
         userService.createUser(userObj);
             //.then(findAllUsers);
 

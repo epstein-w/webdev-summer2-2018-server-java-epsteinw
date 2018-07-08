@@ -7,7 +7,7 @@ function UserServiceClient() {
     this.url = 'http://localhost:8080/api/user';
     var self = this;
     function createUser(user, callback) {
-        return fetch(self.url, {
+        return fetch(self.url + "/register", {
             method: 'post',
             body: JSON.stringify(user),
             headers: {
