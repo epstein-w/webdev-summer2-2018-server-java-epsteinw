@@ -3,8 +3,8 @@
     var $removeBtn, $editBtn, $createBtn, $searchBtn;
     var $firstNameFld, $lastNameFld;
     var $userRowTemplate, $tbody;
-    var userService = new AdminUserServiceClient();
-    $(main);
+    var userService = new UserServiceClient();
+    main();
 
     function main() {
         $usernameFld = $('#usernameFld');
@@ -12,11 +12,21 @@
         $firstNameFld = $('#firstNameFld');
         $lastNameFld = $('#lastNameFld');
 
-        $removeBtn = $('wbdv-remove')
-        $editBtn = $('wbdv-edit')
-        $createBtn = $('wbdv-create')
-        $searchBtn = $('wbdv-search')
+        $removeBtn = $('wbdv-remove');
+        $editBtn = $('wbdv-edit');
+        $createBtn = $('wbdv-create');
+        $searchBtn = $('wbdv-search');
 
+        $userRowTemplate = $('#wbdv-template');
+
+        $tbody = $("#wbdv-tbody");
+
+        $editBtn.click(updateUser);
+        $createBtn.click(createUser);
+        $removeBtn.click(deleteUser);
+        $searchBtn.click(findUserById);
+
+        //findAllUsers();
     }
     function createUser() {
         var usernameStr = $usernameFld.val();
@@ -31,7 +41,9 @@
             lastName: lastNameStr
         };
 
-        userService.createUser(userObj).then(findAllUsers);
+        console.log("createUser");
+        userService.createUser(userObj);
+            //.then(findAllUsers);
 
     }
     function findAllUsers() {
@@ -53,6 +65,19 @@
 
     }
     function renderUsers(users) {
-
+        // $tbody.empty();
+        // for(var i=0; i<users.length; i++) {
+        //     var user = users[i];
+        //     var clone = $userRowTemplate.clone();
+        //
+        //     clone.attr('id', user.id);
+        //
+        //     clone.find('.delete').click(deleteUser);
+        //     clone.find('.edit').click(editUser);
+        //
+        //     clone.find('.username')
+        //         .html(user.username);
+        //     tbody.append(clone);
+        // }
     }
 })();

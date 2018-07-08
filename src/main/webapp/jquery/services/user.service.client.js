@@ -16,7 +16,7 @@ function UserServiceClient() {
         })
     }
     function findAllUsers(callback) {
-        return fetch(self.url)
+        return fetch(self.url + "/findAllUsers")
             .then(function (response) {
                 return response.json();
             });

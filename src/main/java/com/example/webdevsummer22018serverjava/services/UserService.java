@@ -22,7 +22,7 @@ public class UserService {
 		return userRepository.save(user);
 	}
 	
-	@GetMapping("/api/findAllUsers")
+	@GetMapping("/api/user/findAllUsers")
 	public List<User> findAllUsers() {
 		return (List<User>)userRepository.findAll();
 	}
