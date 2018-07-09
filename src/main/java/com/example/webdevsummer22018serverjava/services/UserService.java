@@ -24,7 +24,7 @@ public class UserService {
 		if (this.findUserByUserName(user.getUsername())) {
 			return userRepository.save(user);
 		} else {
-			
+			return new User();
 		}
 	}
 	
