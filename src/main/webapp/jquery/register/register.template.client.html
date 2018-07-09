@@ -12,7 +12,7 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link href="user-admin.style.client.css" rel="stylesheet" />
+    <link href="register.style.client.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -22,6 +22,7 @@
         <h1>Register</h1>
         </div>
     </div>
+
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
@@ -54,10 +55,11 @@
         <div>
             <label for="password2">
                 Validate Password
+                <input type="password"
+                       placeholder="somethingSecure"
+                       id="password2"/>
             </label>
-            <input type="password"
-                   placeholder="somethingSecure"
-                   id="password2"/>
+
         </div>
 
     </div>
@@ -74,7 +76,7 @@
         </div>
     </div>
 
-
+    <script src="../services/user.service.client.js"></script>
     <script src="register.controller.client.js"></script>
 
 </body>

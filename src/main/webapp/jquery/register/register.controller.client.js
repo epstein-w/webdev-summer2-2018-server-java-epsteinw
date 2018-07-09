@@ -1,31 +1,41 @@
 (function() {
-    var registerBtn = jQuery('#registerBtn');
+    var $usernameFld, $passwordFld, $password2Fld;
+    var $registerBtn ;
+    var userService = new UserServiceClient();
 
-    var usernameFld = $('#username');
-    var passwordFld = $('#password');
-    var password2Fld = $('#password2');
-    registerBtn.click(registerHandler);
+    main();
+
+    function main() {
+
+        $usernameFld = $('#username');
+        $passwordFld = $('#password');
+        $password2Fld = $('#password2');
+        $registerBtn = $('#registerBtn');
+        $registerBtn.click(registerHandler);
+    }
 
 
     function registerHandler() {
-        var usernameStr = usernameFld.val();
-        var passwordStr = passwordFld.val();
-        var password2Str = password2Fld.val();
+        var usernameStr = $usernameFld.val();
+        var passwordStr = $passwordFld.val();
+        var password2Str = $password2Fld.val();
 
-        //validation of 2 passwords!!!
-        var userObj = {
-            username: usernameStr,
-            password: passwordStr
-        };
+        if (passwordStr === password2Str) {
+            var userObj = {
+                username: usernameStr,
+                password: passwordStr
+            };
+l
+            var response = userService.register(userObj);
 
-        var userObjStr = JSON.stringify(userObj);
-
-        fetch('/api/register',  {
-            method: 'post',
-            body: userObjStr,
-            headers: {
-                'Content-Type': 'application/json'
+            if (!(response.username === userObj.username)) {
+                alert("You cannot have the same username as someone else");
             }
-        });
+
+        }  else {
+            alert("Your passwords must match!");
+        }
     }
+
+
 })();

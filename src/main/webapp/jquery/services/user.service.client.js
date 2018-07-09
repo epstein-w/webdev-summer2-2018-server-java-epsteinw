@@ -9,6 +9,7 @@ function UserServiceClient() {
     this.findUserById = findUserById;
     this.deleteUser = deleteUser;
     this.updateUser = updateUser;
+    this.register = register;
 
     var self = this;
     function createUser(user, callback) {
@@ -52,5 +53,30 @@ function UserServiceClient() {
         return fetch(self.url + "/" + userId, {
             method: 'delete'
         })
+    }
+    function register(userObj) {
+        // var users = findAllUsers().then(console.log("completed"));
+        //
+        // console.log(users);
+        // for (var i = 0; i < users.length; i++) {
+        //     var cUser = users[i];
+        //     console.log(cUser.username + " | " + userObj.username);
+        //     if (cUser.username === userObj.username) {
+        //
+        //         console.log("copied username");
+        //         return false;
+        //     }
+        // }
+
+         var response = fetch(self.url, {
+            method: "post",
+            body: JSON.stringify(userObj),
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
+
+         return response;
+
     }
 }
