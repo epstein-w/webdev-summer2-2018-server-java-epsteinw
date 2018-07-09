@@ -21,8 +21,13 @@ public class UserService {
 	
 	@PostMapping("/api/user")
 	public User register(@RequestBody User user) {
-		return userRepository.save(user);
+		if (this.findUserByUserName(user.getUsername())) {
+			return userRepository.save(user);
+		} else {
+			
+		}
 	}
+	
 	
 	@GetMapping("/api/user")
 	public List<User> findAllUsers() {
@@ -52,4 +57,19 @@ public class UserService {
 		userRepository.deleteById(id);
 	}
 	
+	@DeleteMapping("api/user")
+	public void deleteAll() {
+		userRepository.deleteAll();
+	}
+	
+	public boolean findUserByUserName(String username) {
+		for (User u : userRepository.findAll()) {
+			if (u.getUsername().equals(username)) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
+
+

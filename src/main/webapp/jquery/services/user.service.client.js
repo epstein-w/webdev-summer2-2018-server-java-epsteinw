@@ -55,26 +55,28 @@ function UserServiceClient() {
         })
     }
     function register(userObj) {
-        var users = findAllUsers().then(console.log("completed"));
+        // var users = findAllUsers().then(console.log("completed"));
+        //
+        // console.log(users);
+        // for (var i = 0; i < users.length; i++) {
+        //     var cUser = users[i];
+        //     console.log(cUser.username + " | " + userObj.username);
+        //     if (cUser.username === userObj.username) {
+        //
+        //         console.log("copied username");
+        //         return false;
+        //     }
+        // }
 
-        console.log(users);
-        for (var i = 0; i < users.length; i++) {
-            var cUser = users[i];
-            console.log(cUser.username + " | " + userObj.username);
-            if (cUser.username === userObj.username) {
-
-                console.log("copied username");
-                return false;
-            }
-        }
-        fetch(self.url, {
+         var response = fetch(self.url, {
             method: "post",
             body: JSON.stringify(userObj),
             headers: {
                 'content-type': 'application/json'
             }
-         });
-        return true;
+        });
+
+         return response;
 
     }
 }
