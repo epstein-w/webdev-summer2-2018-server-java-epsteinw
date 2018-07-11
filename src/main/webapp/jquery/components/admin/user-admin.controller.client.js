@@ -128,9 +128,6 @@
         // $usernameFld.parent.attr('id', userId);
     }
 
-    function renderUser(user) {
-
-    }
 
     function renderUsers(users) {
         $tbody.empty();
