@@ -1,7 +1,7 @@
 (function() {
     var $usernameFld, $passwordFld;
-    var $removeBtn, $editBtn, $createBtn, $searchBtn;
-    var $firstNameFld, $lastNameFld, $roleFld;
+    var $removeBtn, $editBtn, $createBtn, $searchBtn, $updateButton;
+    var $firstNameFld, $lastNameFld, $emailFld, $roleFld;
     var $userRowTemplate, $tbody;
     var userService = new UserServiceClient();
     main();
@@ -11,20 +11,28 @@
         $passwordFld = $('#passwordFld');
         $firstNameFld = $('#firstNameFld');
         $lastNameFld = $('#lastNameFld');
+        $emailFld = $('#emailFld');
         $roleFld = $("#roleFld");
+
         $removeBtn = $('#wbdv-remove');
         $editBtn = $('#wbdv-edit');
         $createBtn = $('#wbdv-create');
         $searchBtn = $('#wbdv-search');
+  //      $updateButton = $('#wbdv-update');
 
         $userRowTemplate = $('#wbdv-template');
 
         $tbody = $(".wbdv-tbody");
 
-        $editBtn.click(updateUser);
+        $editBtn.click(selectUser);
         $createBtn.click(createUser);
         $removeBtn.click(deleteUser);
+   //     $updateButton.click(updateUser);
         $searchBtn.click(findUserById);
+
+
+        console.log($removeBtn);
+        console.log("___");
 
         findAllUsers();
     }
@@ -34,6 +42,7 @@
         var passwordStr = $passwordFld.val();
         var firstNameStr = $firstNameFld.val();
         var lastNameStr = $lastNameFld.val();
+        var emailStr = $emailFld.val();
         var roleStr = $roleFld.val();
         var userObj = {
             username: usernameStr,
@@ -43,7 +52,7 @@
             role: roleStr,
             phone: null,
             dateOfBirth: null,
-            email: null
+            email: emailStr
         };
 
 
@@ -53,21 +62,61 @@
     function findAllUsers() {
         userService.findAllUsers().then(renderUsers);
     }
-    function findUserById() {
-
+    function findUserById(id) {
+        return userService.findUserById(id);
     }
-    function deleteUser() {
+    function deleteUser(event) {
+        var deleteBtn = $(event.currentTarget);
+        var userId = deleteBtn
+            .parent()
+            .parent()
+            .parent()
+            .attr('id');
 
+        userService
+            .deleteUser(userId)
+            .then(findAllUsers);
     }
-    function selectUser() {
+    function selectUser(event) {
+        var deleteBtn = $(event.currentTarget);
+        var userId = deleteBtn
+            .parent()
+            .parent()
+            .parent()
+            .attr('id');
 
+        var upUser = userService.findUserById(userId).then(copyUserInfoHandler)
+        copyUserInfoHandler(upUser, userId);
     }
-    function updateUser() {
 
+    // function updateUser(event) {
+    //     var updateBtn = $(event.currentTarget);
+    //     var userObj = {
+    //         username: $usernameFld.val(),
+    //         password: $passwordFld.val(),
+    //         firstName: $firstNameFld.val(),
+    //         lastName: $lastNameFld.val(),
+    //         role:  $roleFld.val(),
+    //         email: $emailFld.val()
+    //     };
+    //     var userId = updateBtn.parent.parent.parent.attr('id');
+    //     userService.updateUser(userId, userObj).then(findAllUsers);
+    // }
+
+    function copyUserInfoHandler(user, userId) {
+        console.log(user.username);
+        $usernameFld.val(user.username);
+        // $firstNameFld.html(user.firstName);
+        // $lastNameFld.html(user.lastName);
+        // $emailFld.html(user.email);
+        // $roleFld.html(user.role);
+        // $usernameFld.parent.attr('id', userId);
     }
+
     function renderUser(user) {
 
     }
+
     function renderUsers(users) {
         $tbody.empty();
         for(var i=0; i<users.length; i++) {
@@ -76,8 +125,8 @@
 
             clone.attr('id', cUser.id);
 
-            clone.find('.delete').click(deleteUser);
-            clone.find('.edit').click(updateUser);
+            clone.find('.wbdv-remove').click(deleteUser);
+            clone.find('.wbdv-edit').click(selectUser);
 
             clone.find('.wbdv-username')
                 .html(cUser.username);
@@ -87,6 +136,8 @@
                 .html(cUser.firstName);
             clone.find('.wbdv-last-name')
                 .html(cUser.lastName);
+            clone.find('.wbdv-email')
+                .html(cUser.email);
             clone.find('.wbdv-role')
                 .html(cUser.role);
 
