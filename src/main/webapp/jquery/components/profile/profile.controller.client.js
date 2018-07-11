@@ -1,20 +1,24 @@
 (function () {
 
-    var $username, $firstName, $lastName,
-        $updateBtn;
+    var $usernameFld, $firstNameFld, $lastNameFld, $phoneFld, $emailFld, $roleFld, $dateOfBirthFld,
+        $updateBtn, $logoutBtn;
     var currentUser = null;
+    var userService = new UserServiceClient();
 
     function init() {
 
-        $username = $("#username");
-        $firstName = $("#firstName");
-        $lastName = $("#lastName");
+        $usernameFld = $("#usernameFld");
+        $firstNameFld = $("#firstNameFld");
+        $lastNameFld = $("#lastNameFld");
+        $phoneFld = $("#phoneFld");
+        $emailFld = $("#emailFld");
+        $roleFld = $("#roleFld");
+        $dateOfBirthFld = $("#dateOfBirthFld");
+
         $updateBtn = $("#updateBtn");
-
+        $logoutBtn = $("#logoutBtn");
         $updateBtn.click(updateUser);
-
-        // findUserById(7)
-        //   .then(renderUser)
+        $logoutBtn.click(logout);
         profile()
             .then(renderUser);
     }
@@ -22,44 +26,53 @@
 
     function updateUser() {
         var user = {
-            firstName: $firstName.val(),
-            lastName: $lastName.val()
+            username: $usernameFld.val(),
+            password: "****",
+            firstName: $firstNameFld.val(),
+            lastName: $lastNameFld.val(),
+            phone: $phoneFld.val(),
+            email: $emailFld.val(),
+            role: $roleFld.val(),
+            dateOfBirth: $dateOfBirthFld.val().toString(),
         };
 
-        fetch("/api/user/" + currentUser.id, {
-            method: 'put',
-            body: JSON.stringify(user),
-            'credentials': 'include',
-            headers: {
-                'content-type': 'application/json'
-            }
-        });
+        console.log(user.firstName);
+        userService.updateProfile(user).then(renderUser(user));
     }
 
     function renderUser(user) {
         currentUser = user;
-        $username.val(user.username);
-        $firstName.val(user.firstName);
-        $lastName.val(user.lastName);
+        currentUser.id = user.id;
+        $usernameFld.val(user.username);
+        $firstNameFld.val(user.firstName);
+        $lastNameFld.val(user.lastName);
+        $phoneFld.val(user.phone);
+        $emailFld.val(user.email);
+        $roleFld.val(user.role);
+        $dateOfBirthFld.val(user.dateOfBirth);
     }
 
     function profile() {
-        return fetch('/profile', {
-            'credentials': 'include'
-        })
-            .then(function (response) {
-                return response.json();
-            });
+        return userService.profile().then(goodResponse, badResponse);
+    }
+    function goodResponse(response) {
+        return response;
     }
 
-    function findUserById(userId) {
-        return fetch('/api/user/' + userId)
-            .then(function (response) {
-                return response.json();
-            });
+    function badResponse(response) {
+        var userObj = {
+            firstName: "",
+            lastName: "",
+            phone: "",
+            email: "",
+            role: "",
+            dateOfBirth: ""
+        };
+        return userObj;
     }
 
-    function handleResponse() {
-
+    function logout() {
+        userService.logout().then(window.location.reload());
     }
+
 })();
