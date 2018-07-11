@@ -46,7 +46,7 @@ public class UserService {
 	public User login(@RequestBody User user, HttpSession session) {
 		User currentUser = userRepository.findUserByCredentials(user.getUsername(), user.getPassword());
 		if (currentUser == null) {
-			
+			System.out.println("hfadsjhkafdhjksl");
 		} else {
 			session.setAttribute("currentUser", currentUser);
 		}
@@ -95,12 +95,39 @@ public class UserService {
 		userRepository.deleteAll();
 	}
 
-	@GetMapping("/profile")
+	@GetMapping("/profile/")
 	public Optional<User> profile(@RequestBody User user, HttpSession session) {
 		User currentUser = (User)session.getAttribute("currentUser");
 		return userRepository.findById(currentUser.getId());
 	}
 
+	
+	@PostMapping("/api/logout") 
+	public User logout(HttpSession session) {
+		User user = (User) session.getAttribute("currentUser");
+		session.invalidate();
+		return user;
+	}
+	
+	@GetMapping("/invalidateSession")
+	public void invalidate(HttpSession session) {
+		session.invalidate();
+	}
+	
+	@PutMapping("/api/profile")
+	public User updateProfile(@RequestBody User updateUser, HttpSession session) {
+		User oldUser = (User)session.getAttribute("currentUser");
+		oldUser.setDateOfBirth(updateUser.getDateOfBirth());;
+		oldUser.setEmail(updateUser.getEmail());
+		oldUser.setFirstName(updateUser.getFirstName());
+		oldUser.setLastName(updateUser.getLastName());
+		oldUser.setPhone(updateUser.getPhone());
+		oldUser.setRole(updateUser.getRole());
+		
+	
+		
+		return userRepository.save(oldUser);
+	}
 }
 
 
