@@ -30,15 +30,29 @@ public class UserService {
 //			return null;
 //		}
 //		
-		List<User> arl = (List<User>)userRepository.findUserByUsername(user.getUsername());
-		if (arl.isEmpty()) {
-			return user;
+//		List<User> arl = (List<User>)userRepository.findUserByUsername(user.getUsername());
+//		if (arl.isEmpty()) {
+//			return user;
+//		} else {
+//			return new User();
+//		}
+		
+		Optional<User> userC = userRepository.findUserByUsername(user.getUsername());
+		
+		if (userC.isPresent()) {
+			return null;
 		} else {
-			return new User();
+			return userRepository.save(user);
 		}
+		
 		
 	}
 	
+	@PostMapping("/api/user/login")
+	public User login(@RequestBody User user) {
+		user = userRepository.findUserByCredentials(user.getUsername(), user.getPassword());
+		return user;
+	}
 	
 	@GetMapping("/api/user")
 	public List<User> findAllUsers() {

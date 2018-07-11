@@ -10,6 +10,7 @@ function UserServiceClient() {
     this.deleteUser = deleteUser;
     this.updateUser = updateUser;
     this.register = register;
+    this.login = login;
     var self = this;
 
     function createUser(user, callback) {
@@ -19,7 +20,9 @@ function UserServiceClient() {
             headers: {
                 'content-type': 'application/json'
             }
-        })
+        }).then(function(response){
+            return response.json();
+        });
     }
     function findAllUsers(callback) {
         return fetch(self.url)
@@ -56,15 +59,29 @@ function UserServiceClient() {
     }
 
     function register(userObj, callback) {
-        console.log("registering");
-        return  fetch(self.url, {
+
+        return fetch(self.url, {
             method: "post",
             body: JSON.stringify(userObj),
+            credentials: "include",
             headers: {
                 'content-type': 'application/json'
             }
+        }).then(function(response){
+            return response.json();
         });
-
-
     }
+    function login(userObj, callback) {
+        return fetch(self.url + "/login", {
+            method: "post",
+            body: JSON.stringify(userObj),
+            credentials: "include",
+            headers: {
+                'content-type': 'application/json'
+            }
+        }).then(function(response){
+            return response.json();
+        });;
+    }
+
 }
