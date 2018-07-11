@@ -32,4 +32,4 @@
     function badUser(response) {
         alert("Incorrect Username or Password");
     }
-})()
+})();

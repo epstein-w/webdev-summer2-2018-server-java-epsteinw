@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,36 +24,33 @@ public class UserService {
 	UserRepository userRepository;
 	
 	@PostMapping("/api/user")
-	public User register(@RequestBody User user) {
-//		User temp = this.findUserByUsername(user.getUsername());
-//		if (temp == null) {
-//			return userRepository.save(user);
-//		} else {
-//			return null;
-//		}
-//		
-//		List<User> arl = (List<User>)userRepository.findUserByUsername(user.getUsername());
-//		if (arl.isEmpty()) {
-//			return user;
-//		} else {
-//			return new User();
-//		}
-		
+	public User register(@RequestBody User user, HttpSession session) {
 		Optional<User> userC = userRepository.findUserByUsername(user.getUsername());
 		
 		if (userC.isPresent()) {
 			return null;
 		} else {
-			return userRepository.save(user);
+			User currentUser =  userRepository.save(user);
+			session.setAttribute("currentUser", currentUser);
+			return currentUser;
 		}
-		
-		
 	}
 	
+	@GetMapping("/checkLogin")
+	public User checkLogin(HttpSession session) {
+		return (User)session.getAttribute("currentUser");
+	}
+	
+	
 	@PostMapping("/api/user/login")
-	public User login(@RequestBody User user) {
-		user = userRepository.findUserByCredentials(user.getUsername(), user.getPassword());
-		return user;
+	public User login(@RequestBody User user, HttpSession session) {
+		User currentUser = userRepository.findUserByCredentials(user.getUsername(), user.getPassword());
+		if (currentUser == null) {
+			
+		} else {
+			session.setAttribute("currentUser", currentUser);
+		}
+		return currentUser;
 	}
 	
 	@GetMapping("/api/user")
@@ -95,11 +94,12 @@ public class UserService {
 	public void deleteAll() {
 		userRepository.deleteAll();
 	}
-	
-//	public User findUserByUsername(String username) {
-//		return null;
-//		//return userRepository.findUserByUsername(username);
-//	}
+
+	@GetMapping("/profile")
+	public Optional<User> profile(@RequestBody User user, HttpSession session) {
+		User currentUser = (User)session.getAttribute("currentUser");
+		return userRepository.findById(currentUser.getId());
+	}
 
 }
 
