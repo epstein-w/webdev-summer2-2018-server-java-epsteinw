@@ -37,7 +37,7 @@
         };
 
         console.log(user.firstName);
-        userService.updateProfile(user).then(renderUser(currentUser));
+        userService.updateProfile(user).then(renderUser(user));
     }
 
     function renderUser(user) {
