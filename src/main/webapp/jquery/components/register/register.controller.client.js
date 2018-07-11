@@ -26,21 +26,21 @@
                 password: passwordStr
             };
 
-            var response = userService.register(userObj);
-
-            if (!(response.username === userObj.username)) {
-                alert("You cannot have the same username as someone else");
-                console.log(reponse);
-                console.log(response.username);
-                console.log(userObj.username);
-            } else {
-                window.location.href = "/profile.template.client.html";
-            }
+            userService.register(userObj).then(goodResponse, badResponse);
 
         }  else {
             alert("Your passwords must match!");
         }
     }
+
+    function goodResponse(response) {
+        window.location.href = "../profile/profile.template.client.html";
+    }
+
+    function badResponse(response) {
+        alert("You cannot use that username, it is already taken!");
+    }
+
 
 
 })();
