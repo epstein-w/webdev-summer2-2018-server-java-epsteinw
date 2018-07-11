@@ -10,8 +10,8 @@ function UserServiceClient() {
     this.deleteUser = deleteUser;
     this.updateUser = updateUser;
     this.register = register;
-
     var self = this;
+
     function createUser(user, callback) {
         return fetch(self.url, {
             method: "post",
@@ -54,21 +54,10 @@ function UserServiceClient() {
             method: 'delete'
         })
     }
-    function register(userObj) {
-        // var users = findAllUsers().then(console.log("completed"));
-        //
-        // console.log(users);
-        // for (var i = 0; i < users.length; i++) {
-        //     var cUser = users[i];
-        //     console.log(cUser.username + " | " + userObj.username);
-        //     if (cUser.username === userObj.username) {
-        //
-        //         console.log("copied username");
-        //         return false;
-        //     }
-        // }
 
-         var response = fetch(self.url, {
+    function register(userObj, callback) {
+        console.log("registering");
+        return  fetch(self.url, {
             method: "post",
             body: JSON.stringify(userObj),
             headers: {
@@ -76,7 +65,6 @@ function UserServiceClient() {
             }
         });
 
-         return response;
 
     }
 }

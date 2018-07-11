@@ -25,11 +25,16 @@
                 username: usernameStr,
                 password: passwordStr
             };
-l
+
             var response = userService.register(userObj);
 
             if (!(response.username === userObj.username)) {
                 alert("You cannot have the same username as someone else");
+                console.log(reponse);
+                console.log(response.username);
+                console.log(userObj.username);
+            } else {
+                window.location.href = "/profile.template.client.html";
             }
 
         }  else {

@@ -1,5 +1,6 @@
 package com.example.webdevsummer22018serverjava.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,11 +23,20 @@ public class UserService {
 	
 	@PostMapping("/api/user")
 	public User register(@RequestBody User user) {
-		if (this.findUserByUserName(user.getUsername())) {
-			return userRepository.save(user);
+//		User temp = this.findUserByUsername(user.getUsername());
+//		if (temp == null) {
+//			return userRepository.save(user);
+//		} else {
+//			return null;
+//		}
+//		
+		List<User> arl = (List<User>)userRepository.findUserByUsername(user.getUsername());
+		if (arl.isEmpty()) {
+			return user;
 		} else {
 			return new User();
 		}
+		
 	}
 	
 	
@@ -34,7 +45,7 @@ public class UserService {
 		return (List<User>)userRepository.findAll();
 	}
 	
-	@PostMapping("/api/user/{userId}")
+	@PutMapping("/api/user/{userId}")
 	public User editUser(@RequestBody User newData, @PathVariable("userId") Integer id) {
 		Optional<User> oldData = userRepository.findById(id);
 		if(oldData.isPresent()) {
@@ -52,7 +63,16 @@ public class UserService {
 			
 	}
 	
-	@DeleteMapping("api/user/{userId")
+	@GetMapping("/api/user/{userId}")
+	public User findUserById(@PathVariable("userId") int userId) {
+		Optional<User> data = userRepository.findById(userId);
+		if(data.isPresent()) {
+			return data.get();
+		}
+		return null;
+	}
+	
+	@DeleteMapping("/api/user/{userId}")
 	public void deleteUser(@PathVariable("userId") Integer id) {
 		userRepository.deleteById(id);
 	}
@@ -62,14 +82,12 @@ public class UserService {
 		userRepository.deleteAll();
 	}
 	
-	public boolean findUserByUserName(String username) {
-		for (User u : userRepository.findAll()) {
-			if (u.getUsername().equals(username)) {
-				return false;
-			}
-		}
-		return true;
-	}
+//	public User findUserByUsername(String username) {
+//		return null;
+//		//return userRepository.findUserByUsername(username);
+//	}
+
 }
+
 
 
