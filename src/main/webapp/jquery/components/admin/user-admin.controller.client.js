@@ -1,8 +1,9 @@
 (function() {
     var $usernameFld, $passwordFld;
+    var $firstNameFld, $lastNameFld, $emailFld, $dateOfBirthFld, $phoneFld, $roleFld;
     var $removeBtn, $editBtn, $createBtn, $searchBtn, $updateButton;
-    var $firstNameFld, $lastNameFld, $emailFld, $roleFld;
-    var $userRowTemplate, $tbody;
+
+    var $userRowTemplate, $tbody, $inputArea;
     var userService = new UserServiceClient();
     main();
 
@@ -12,22 +13,24 @@
         $firstNameFld = $('#firstNameFld');
         $lastNameFld = $('#lastNameFld');
         $emailFld = $('#emailFld');
+        $dateOfBirthFld = $('#dateOfBirthFld');
+        $phoneFld = $('#phoneFld');
         $roleFld = $("#roleFld");
 
         $removeBtn = $('#wbdv-remove');
         $editBtn = $('#wbdv-edit');
         $createBtn = $('#wbdv-create');
         $searchBtn = $('#wbdv-search');
-  //      $updateButton = $('#wbdv-update');
+        $updateButton = $('#wbdv-update');
 
         $userRowTemplate = $('#wbdv-template');
-
+        $inputArea = $('.wbdv-input-section');
         $tbody = $(".wbdv-tbody");
 
         $editBtn.click(selectUser);
         $createBtn.click(createUser);
         $removeBtn.click(deleteUser);
-   //     $updateButton.click(updateUser);
+        $updateButton.click(updateUser);
         $searchBtn.click(findUserById);
 
 
@@ -43,6 +46,8 @@
         var firstNameStr = $firstNameFld.val();
         var lastNameStr = $lastNameFld.val();
         var emailStr = $emailFld.val();
+        var dateOfBirthStr = $dateOfBirthFld.val();
+        var phoneStr = $phoneFld.val();
         var roleStr = $roleFld.val();
         var userObj = {
             username: usernameStr,
@@ -50,8 +55,8 @@
             firstName: firstNameStr,
             lastName: lastNameStr,
             role: roleStr,
-            phone: null,
-            dateOfBirth: null,
+            phone: phoneStr,
+            dateOfBirth: dateOfBirthStr,
             email: emailStr
         };
 
@@ -89,23 +94,33 @@
         copyUserInfoHandler(upUser, userId);
     }
 
-    // function updateUser(event) {
-    //     var updateBtn = $(event.currentTarget);
-    //     var userObj = {
-    //         username: $usernameFld.val(),
-    //         password: $passwordFld.val(),
-    //         firstName: $firstNameFld.val(),
-    //         lastName: $lastNameFld.val(),
-    //         role:  $roleFld.val(),
-    //         email: $emailFld.val()
-    //     };
-    //     var userId = updateBtn.parent.parent.parent.attr('id');
-    //     userService.updateUser(userId, userObj).then(findAllUsers);
-    // }
+    function updateUser(event) {
+        var updateBtn = $(event.currentTarget);
+        var userObj = {
+            username: $usernameFld.val(),
+            password: $passwordFld.val(),
+            firstName: $firstNameFld.val(),
+            lastName: $lastNameFld.val(),
+            role:  $roleFld.val(),
+            email: $emailFld.val(),
+            dateOfBirth: $dateOfBirthFld.val(),
+            phone: $phoneFld.val()
+        };
+        var userId = updateBtn.parent().parent().parent().attr('id');
+        userService.updateUser(userId, userObj).then(findAllUsers);
+    }
 
     function copyUserInfoHandler(user, userId) {
         console.log(user.username);
         $usernameFld.val(user.username);
+        $firstNameFld.val(user.firstName);
+        $lastNameFld.val(user.lastName);
+        $emailFld.val(user.email);
+        $dateOfBirthFld.val(user.dateOfBirth);
+        $phoneFld.val(user.phone);
+        $roleFld.val(user.role);
+        console.log($roleFld.val());
+        $inputArea.attr('id', userId);
         // $firstNameFld.html(user.firstName);
         // $lastNameFld.html(user.lastName);
         // $emailFld.html(user.email);
@@ -138,6 +153,10 @@
                 .html(cUser.lastName);
             clone.find('.wbdv-email')
                 .html(cUser.email);
+            clone.find('.wbdv-dateOfBirth')
+                .html(cUser.dateOfBirth.toString());
+            clone.find('.wbdv-phone')
+                .html(cUser.phone);
             clone.find('.wbdv-role')
                 .html(cUser.role);
 
