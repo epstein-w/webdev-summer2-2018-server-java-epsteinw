@@ -46,7 +46,7 @@
         var firstNameStr = $firstNameFld.val();
         var lastNameStr = $lastNameFld.val();
         var emailStr = $emailFld.val();
-        var dateOfBirthStr = $dateOfBirthFld.val();
+        var dateOfBirthStr = $dateOfBirthFld.val().toString();
         var phoneStr = $phoneFld.val();
         var roleStr = $roleFld.val();
         var userObj = {
@@ -103,7 +103,7 @@
             lastName: $lastNameFld.val(),
             role:  $roleFld.val(),
             email: $emailFld.val(),
-            dateOfBirth: $dateOfBirthFld.val(),
+            dateOfBirth: $dateOfBirthFld.val().toString(),
             phone: $phoneFld.val()
         };
         var userId = updateBtn.parent().parent().parent().attr('id');
@@ -150,8 +150,10 @@
                 .html(cUser.lastName);
             clone.find('.wbdv-email')
                 .html(cUser.email);
-            clone.find('.wbdv-dateOfBirth')
-                .html(cUser.dateOfBirth.toString());
+            clone.find('.wbdv-date-of-birth').html(cUser.dateOfBirth);
+            console.log(cUser.dateOfBirth);
+            console.log(cUser.dateOfBirth.toString());
+
             clone.find('.wbdv-phone')
                 .html(cUser.phone);
             clone.find('.wbdv-role')
@@ -159,6 +161,8 @@
 
             $tbody.append(clone);
         }
+
+      
 
     }
 })();

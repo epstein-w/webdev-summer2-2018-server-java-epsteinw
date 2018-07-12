@@ -24,10 +24,10 @@ public class User {
 		this.password = "notSet";
 		this.firstName = "notSet";
 		this.lastName = "notSet";
-		this.phone = "notSet";
+		this.phone = "000-000-0000";
 		this.email = "notSet";
-		this.role = "notSet";
-		this.dateOfBirth = "notSet";
+		this.role = "STUDENT";
+		this.dateOfBirth = "1111-11-11";
 	}
 	
 	

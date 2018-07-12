@@ -34,13 +34,13 @@ function UserServiceClient() {
             });
     }
     function findUserById(userId, callback) {
-        return fetch(self.url + + "user/" + userId)
+        return fetch(self.url + "user/" + userId)
             .then(function(response){
                 return response.json();
             });
     }
     function updateUser(userId, user, callback) {
-        return fetch(self.url + + "user"/ + userId, {
+        return fetch(self.url + "user/" + userId, {
         method: 'put',
         body: JSON.stringify(user),
 
@@ -60,7 +60,7 @@ function UserServiceClient() {
 
 
     function deleteUser(userId, callback) {
-        return fetch(self.url + "/" + userId, {
+        return fetch(self.url + "user/" + userId, {
             method: 'delete'
         })
     }
