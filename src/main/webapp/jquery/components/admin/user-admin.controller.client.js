@@ -151,8 +151,7 @@
             clone.find('.wbdv-email')
                 .html(cUser.email);
             clone.find('.wbdv-date-of-birth').html(cUser.dateOfBirth);
-            console.log(cUser.dateOfBirth);
-            console.log(cUser.dateOfBirth.toString());
+   
 
             clone.find('.wbdv-phone')
                 .html(cUser.phone);
