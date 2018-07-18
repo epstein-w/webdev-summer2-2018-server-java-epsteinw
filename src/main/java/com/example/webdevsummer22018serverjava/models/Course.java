@@ -14,8 +14,17 @@ public class Course {
 	private Date created;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modified;
+	private String creator;
 	
 	
+	public String getCreator() {
+		return this.creator;
+	}
+	
+	public void setCreator (String c) {
+		this.creator = c;
+	}
+		
 	public int getId() {
 		return id;
 	}
