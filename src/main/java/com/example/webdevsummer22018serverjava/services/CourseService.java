@@ -7,6 +7,7 @@ import com.example.webdevsummer22018serverjava.models.Course;
 import com.example.webdevsummer22018serverjava.repositories.CourseRepository;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class CourseService {
 	@Autowired
 	CourseRepository courseRepo;
