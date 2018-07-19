@@ -18,7 +18,6 @@ public class Course {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	@OneToMany(mappedBy="course")
-	@JsonIgnore
 	private List<Module> modules;
 	private String title;
 	@Temporal(TemporalType.TIMESTAMP)
