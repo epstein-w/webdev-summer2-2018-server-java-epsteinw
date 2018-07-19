@@ -16,4 +16,14 @@ public class CourseService {
 	public Iterable<Course> findAllCourses() {
 		return courseRepo.findAll();
 	}
+	
+	@PostMapping("/api/course")
+	public Course addCourse(@RequestBody Course c) {
+		return this.courseRepo.save(c);
+	}
+	
+	@DeleteMapping("/api/course/{courseId}")
+	public void deleteCourseById(@PathVariable("courseId") Integer id) {
+		courseRepo.deleteById(id);
+	}
 }
