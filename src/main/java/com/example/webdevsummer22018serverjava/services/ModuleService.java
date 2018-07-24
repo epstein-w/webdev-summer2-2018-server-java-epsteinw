@@ -27,6 +27,13 @@ public class ModuleService {
 	@Autowired
 	CourseRepository courseRepo;
 	
+	
+	@GetMapping("/api/module/{moduleId}")
+	public Optional<Module> findModuleById(@PathVariable("moduleId") int moduleId) {
+		return this.moduleRepo.findById(moduleId);
+	}
+	
+	
 //	
 //	@PostMapping("/api/course/{courseId}/module")
 //	public Module addModule(@RequestBody Module module, @PathVariable("courseId") Integer courseId) {
