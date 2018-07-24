@@ -48,6 +48,12 @@ public class Module {
 	public void setTest(int test) {
 		this.test = test;
 	}
+	public List<Lesson> getLessons() {
+		return lessons;
+	}
+	public void setLessons(List<Lesson> lessons) {
+		this.lessons = lessons;
+	}
 
 	
 

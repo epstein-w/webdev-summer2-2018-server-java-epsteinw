@@ -1,5 +1,7 @@
 package com.example.webdevsummer22018serverjava.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,17 @@ public class CourseService {
 		courseRepo.deleteById(id);
 	}
 	
+	@GetMapping("/api/course/{courseId}/module")
+	public List<Module> getModulesByCourseId(@PathVariable("courseId") Integer courseId) {
+		Optional<Course> oc = courseRepo.findById(courseId);
+		if (oc.isPresent()) {
+			Course c = oc.get();
+			List<Module> lom = c.getModules();
+			return lom;
+		} else {
+			return new ArrayList<Module>();
+		}
+	}
 
 	@PostMapping("/api/course/{courseId}/module")
 	public Module addModule(@RequestBody Module module, @PathVariable("courseId") Integer courseId) {
