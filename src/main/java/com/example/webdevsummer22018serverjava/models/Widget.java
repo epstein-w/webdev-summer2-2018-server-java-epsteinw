@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Widget {
@@ -12,6 +15,11 @@ public class Widget {
 	private int id;
 	private String title;
 	private String widgetType;
+	private int position;
+	
+	@ManyToOne
+	@JsonIgnore
+	private Lesson lesson;
 	
 	//heading widget
 	private String text;
@@ -72,6 +80,18 @@ public class Widget {
 	}
 	public void setOrdered(boolean ordered) {
 		this.ordered = ordered;
+	}
+	public int getPosition() {
+		return position;
+	}
+	public void setPosition(int position) {
+		this.position = position;
+	}
+	public Lesson getLesson() {
+		return lesson;
+	}
+	public void setLesson(Lesson lesson) {
+		this.lesson = lesson;
 	}
 
 }
